@@ -11,6 +11,39 @@ class Build_Heap_Structure<S> {
     return this.root;
   }
 
+  public static max_heapify<R>(arr: R[], i: number) {
+    const left: R = arr[i * 2 + 1];
+    const right: R = arr[i * 2 + 2];
+
+    if (left !== undefined && left > arr[i]) {
+      arr[2 * i + 1] = arr[i];
+      arr[i] = left;
+      Build_Heap_Structure.max_heapify(arr, i * 2 + 1);
+    }
+
+    if (right !== undefined && right > arr[i]) {
+      arr[2 * i + 2] = arr[i];
+      arr[i] = right;
+      Build_Heap_Structure.max_heapify(arr, i * 2 + 2);
+    }
+  }
+
+  public static min_heapify<R>(arr: R[], i: number) {
+    const left: R = arr[i * 2 + 1];
+    const right: R = arr[i * 2 + 2];
+    if (left !== undefined && left < arr[i]) {
+      arr[2 * i + 1] = arr[i];
+      arr[i] = left;
+      Build_Heap_Structure.min_heapify(arr, i * 2 + 1);
+    }
+
+    if (right !== undefined && right < arr[i]) {
+      arr[2 * i + 2] = arr[i];
+      arr[i] = right;
+      Build_Heap_Structure.min_heapify(arr, i * 2 + 2);
+    }
+  }
+
   buildHeap(arr_heap: S[]) {
     this.root = new Node_Tree<S>(arr_heap[0]);
     const queue: Node_Tree<S>[] = [this.root];
@@ -40,7 +73,19 @@ class Build_Heap_Structure<S> {
 
     while (i >= 0) {
       // call a static function
-      Node_Tree.max_heapify(arr_heap, i);
+      Build_Heap_Structure.max_heapify(arr_heap, i);
+      i--;
+    }
+
+    this.buildHeap(arr_heap);
+  }
+
+  buildMinHeap(arr_heap: S[]) {
+    let i: number = parseInt(`${arr_heap.length / 2}`) - 1;
+
+    while (i >= 0) {
+      // call a static function
+      Build_Heap_Structure.min_heapify(arr_heap, i);
       i--;
     }
 

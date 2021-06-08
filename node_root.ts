@@ -32,23 +32,6 @@ class Node_Tree<T> {
   getRightSide(): Node_Tree<T> {
     return this.right;
   }
-
-  public static max_heapify<R>(arr: R[], i: number) {
-    const left: R = arr[i * 2 + 1];
-    const right: R = arr[i * 2 + 2];
-
-    if (left && left > arr[i]) {
-      arr[2 * i + 1] = arr[i];
-      arr[i] = left;
-      this.max_heapify(arr, i * 2 + 1);
-    }
-
-    if (right && right > arr[i]) {
-      arr[2 * i + 2] = arr[i];
-      arr[i] = right;
-      this.max_heapify(arr, i * 2 + 2);
-    }
-  }
 }
 
 export default Node_Tree;
