@@ -1,4 +1,4 @@
-import Node_Tree from "./node_root";
+import Node_Tree from "../utils/node_root";
 
 class Build_Heap_Structure<S> {
   private root: Node_Tree<S>;
