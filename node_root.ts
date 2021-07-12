@@ -5,8 +5,8 @@ class Node_Tree<T> {
 
   constructor(value?: T, left?: Node_Tree<T>, right?: Node_Tree<T>) {
     this.value = value;
-    this.left = left;
-    this.right = right;
+    this.left = left || null;
+    this.right = right || null;
   }
 
   setValue(value: T) {
