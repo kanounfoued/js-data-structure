@@ -24,14 +24,6 @@ class Node_Tree<T> {
   getValue(): T {
     return this.value;
   }
-
-  getLeftSide(): Node_Tree<T> {
-    return this.left;
-  }
-
-  getRightSide(): Node_Tree<T> {
-    return this.right;
-  }
 }
 
 export default Node_Tree;
