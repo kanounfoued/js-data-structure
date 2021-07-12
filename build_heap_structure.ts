@@ -11,36 +11,36 @@ class Build_Heap_Structure<S> {
     return this.root;
   }
 
-  public static max_heapify<R>(arr: R[], i: number) {
+  private max_heapify<R>(arr: R[], i: number) {
     const left: R = arr[i * 2 + 1];
     const right: R = arr[i * 2 + 2];
 
     if (left !== undefined && left > arr[i]) {
       arr[2 * i + 1] = arr[i];
       arr[i] = left;
-      Build_Heap_Structure.max_heapify(arr, i * 2 + 1);
+      this.max_heapify(arr, i * 2 + 1);
     }
 
     if (right !== undefined && right > arr[i]) {
       arr[2 * i + 2] = arr[i];
       arr[i] = right;
-      Build_Heap_Structure.max_heapify(arr, i * 2 + 2);
+      this.max_heapify(arr, i * 2 + 2);
     }
   }
 
-  public static min_heapify<R>(arr: R[], i: number) {
+  private min_heapify<R>(arr: R[], i: number) {
     const left: R = arr[i * 2 + 1];
     const right: R = arr[i * 2 + 2];
     if (left !== undefined && left < arr[i]) {
       arr[2 * i + 1] = arr[i];
       arr[i] = left;
-      Build_Heap_Structure.min_heapify(arr, i * 2 + 1);
+      this.min_heapify(arr, i * 2 + 1);
     }
 
     if (right !== undefined && right < arr[i]) {
       arr[2 * i + 2] = arr[i];
       arr[i] = right;
-      Build_Heap_Structure.min_heapify(arr, i * 2 + 2);
+      this.min_heapify(arr, i * 2 + 2);
     }
   }
 
@@ -73,7 +73,7 @@ class Build_Heap_Structure<S> {
 
     while (i >= 0) {
       // call a static function
-      Build_Heap_Structure.max_heapify(arr_heap, i);
+      this.max_heapify(arr_heap, i);
       i--;
     }
 
@@ -85,7 +85,7 @@ class Build_Heap_Structure<S> {
 
     while (i >= 0) {
       // call a static function
-      Build_Heap_Structure.min_heapify(arr_heap, i);
+      this.min_heapify(arr_heap, i);
       i--;
     }
 
