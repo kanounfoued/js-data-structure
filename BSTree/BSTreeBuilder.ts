@@ -9,7 +9,7 @@ abstract class BSTreeBuilder<T> {
 
   abstract getRoot(): Node_Tree<T>;
 
-  abstract insertNode(value: T);
+  abstract insertNode(value: T): Node_Tree<T>;
 }
 
 export default BSTreeBuilder;
