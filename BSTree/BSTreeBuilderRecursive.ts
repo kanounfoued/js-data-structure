@@ -112,12 +112,22 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
   }
 
   /**
-   *
    * @param value
    * @returns [parent, node]
    */
   findParent(value: T): [Node_Tree<T>, Node_Tree<T>] {
     return this.recursiveFindParent(this.root, value, null);
+  }
+
+  updateNode(oldValue: T, newValue: T): boolean {
+    const node: Node_Tree<T> = this.findNode(oldValue);
+
+    if (node === null) {
+      return false;
+    }
+
+    node.setValue(newValue);
+    return true;
   }
 }
 
