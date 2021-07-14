@@ -110,6 +110,10 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     if (!this.root) return false;
     return !!this.recursiveRemove(this.root, value, null);
   }
+
+  findParent(value: T): Node_Tree<T> {
+    return null;
+  }
 }
 
 export default BSTreeBuilderRecursive;

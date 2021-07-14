@@ -27,5 +27,6 @@ i_tree.insertNode(35);
 i_tree.insertNode(31);
 
 // console.log(i_tree.removeNode(100));
-console.log(i_tree.findNode(20));
+// console.log(i_tree.findNode(20));
+console.log(i_tree.findParent(31));
 // console.log(i_tree.getRoot());
