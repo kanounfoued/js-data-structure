@@ -15,33 +15,39 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     if (!this.root) {
       this.root = new Node_Tree<T>(value);
       return this.root;
-    } else {
-      return this.recursiveInsertNode(this.root, value);
     }
+
+    return this.recursiveInsertNode(this.root, value, null);
   }
 
   // recursive build of the tree
-  private recursiveInsertNode(node: Node_Tree<T>, value: T): Node_Tree<T> {
-    if (node.getValue() === value) return null;
+  private recursiveInsertNode(
+    node: Node_Tree<T>,
+    value: T,
+    parent: Node_Tree<T>
+  ): Node_Tree<T> {
+    if (node === null) {
+      const leaf: Node_Tree<T> = new Node_Tree<T>(value);
 
-    if (node.getValue() > value) {
-      const leftNode: Node_Tree<T> = node.getLeft();
-
-      if (!leftNode) {
-        node.insertLeft(new Node_Tree<T>(value));
-        return leftNode;
+      if (parent.getValue() === value) {
+        return null;
       }
 
-      this.recursiveInsertNode(leftNode, value);
+      if (parent.getValue() > value) {
+        parent.insertLeft(leaf);
+      } else if (parent.getValue() < value) {
+        parent.insertRight(leaf);
+      }
+
+      return leaf;
+    }
+
+    const nodeValue: T = node.getValue();
+
+    if (nodeValue > value) {
+      return this.recursiveInsertNode(node.getLeft(), value, node);
     } else {
-      const rightNode: Node_Tree<T> = node.getRight();
-
-      if (!rightNode) {
-        node.insertRight(new Node_Tree<T>(value));
-        return rightNode;
-      }
-
-      this.recursiveInsertNode(rightNode, value);
+      return this.recursiveInsertNode(node.getRight(), value, node);
     }
   }
 
@@ -63,65 +69,39 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     return this.recursiveFindNode(this.root, value);
   }
 
-  private remove(node: Node_Tree<T>, value: T, prev: Node_Tree<T>): boolean {
-    if (!node.getLeft() && !node.getRight()) {
-      if (prev.getLeft() === node) prev.insertLeft(null);
-      else prev.insertRight(null);
-
-      return true;
-    }
-
+  private remove(node: Node_Tree<T>, prev: Node_Tree<T>): boolean {
     if (node.getLeft()) {
       swapParentChild(node, node.getLeft());
-      return this.remove(node.getLeft(), value, node);
+      return this.remove(node.getLeft(), node);
     } else if (node.getRight()) {
       swapParentChild(node, node.getRight());
-      return this.remove(node.getRight(), value, node);
+      return this.remove(node.getRight(), node);
     }
 
-    return false;
-  }
+    if (prev.getLeft() === node) prev.insertLeft(null);
+    else prev.insertRight(null);
 
-  private recursiveRemove(
-    node: Node_Tree<T>,
-    value: T,
-    prev: Node_Tree<T>
-  ): boolean {
-    if (node.getValue() === value) {
-      return this.remove(node, value, prev);
-    }
-
-    if (node.getValue() > value) {
-      const leftNode: Node_Tree<T> = node.getLeft();
-
-      if (!leftNode) return false;
-
-      return this.recursiveRemove(leftNode, value, node);
-    } else {
-      const rightNode: Node_Tree<T> = node.getRight();
-
-      if (!rightNode) return false;
-
-      return this.recursiveRemove(rightNode, value, node);
-    }
+    return true;
   }
 
   removeNode(value: T): boolean {
-    if (!this.root) return false;
-    return !!this.recursiveRemove(this.root, value, null);
+    const [parent, node]: [Node_Tree<T>, Node_Tree<T>] = this.findParent(value);
+    if (node === null) return false;
+
+    return this.remove(node, parent);
   }
 
   recursiveFindParent(
     node: Node_Tree<T>,
     value: T,
     parent: Node_Tree<T>
-  ): Node_Tree<T> {
-    if (node === null) return null;
+  ): [Node_Tree<T>, Node_Tree<T>] {
+    if (node === null) return [null, null];
 
     const nodeValue: T = node.getValue();
 
     if (nodeValue === value) {
-      return parent;
+      return [parent, node];
     }
 
     if (nodeValue > value) {
@@ -131,7 +111,12 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     }
   }
 
-  findParent(value: T): Node_Tree<T> {
+  /**
+   *
+   * @param value
+   * @returns [parent, node]
+   */
+  findParent(value: T): [Node_Tree<T>, Node_Tree<T>] {
     return this.recursiveFindParent(this.root, value, null);
   }
 }
