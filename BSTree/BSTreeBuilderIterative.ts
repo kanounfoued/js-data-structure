@@ -78,7 +78,7 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
       }
     }
 
-    return null;
+    return [null, null];
   }
 
   removeNode(value: T): boolean {
@@ -111,6 +111,44 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
       } else {
         current = current.getRight();
       }
+    }
+
+    return false;
+  }
+
+  updateNode(oldValue: T, newValue: T): boolean {
+    const doesExist: boolean = !!this.findNode(newValue);
+
+    if (doesExist) {
+      return false;
+    }
+
+    const [parent, node]: [Node_Tree<T>, Node_Tree<T>] = this.findParent(
+      oldValue
+    );
+
+    if (node === null) {
+      return false;
+    }
+
+    if (
+      parent === null ||
+      (oldValue < parent.getValue() && newValue < parent.getValue()) ||
+      (oldValue > parent.getValue() && newValue > parent.getValue())
+    ) {
+      const leftNode = node.getLeft();
+      const rightNode = node.getRight();
+
+      if (leftNode && leftNode.getValue() > newValue) {
+        return false;
+      }
+
+      if (rightNode && rightNode.getValue() < newValue) {
+        return false;
+      }
+
+      node.setValue(newValue);
+      return true;
     }
 
     return false;
