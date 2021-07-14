@@ -15,33 +15,39 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     if (!this.root) {
       this.root = new Node_Tree<T>(value);
       return this.root;
-    } else {
-      return this.recursiveInsertNode(this.root, value);
     }
+
+    return this.recursiveInsertNode(this.root, value, null);
   }
 
   // recursive build of the tree
-  private recursiveInsertNode(node: Node_Tree<T>, value: T): Node_Tree<T> {
-    if (node.getValue() === value) return null;
+  private recursiveInsertNode(
+    node: Node_Tree<T>,
+    value: T,
+    parent: Node_Tree<T>
+  ): Node_Tree<T> {
+    if (node === null) {
+      const leaf: Node_Tree<T> = new Node_Tree<T>(value);
 
-    if (node.getValue() > value) {
-      const leftNode: Node_Tree<T> = node.getLeft();
-
-      if (!leftNode) {
-        node.insertLeft(new Node_Tree<T>(value));
-        return leftNode;
+      if (parent.getValue() === value) {
+        return null;
       }
 
-      this.recursiveInsertNode(leftNode, value);
+      if (parent.getValue() > value) {
+        parent.insertLeft(leaf);
+      } else if (parent.getValue() < value) {
+        parent.insertRight(leaf);
+      }
+
+      return leaf;
+    }
+
+    const nodeValue: T = node.getValue();
+
+    if (nodeValue > value) {
+      return this.recursiveInsertNode(node.getLeft(), value, node);
     } else {
-      const rightNode: Node_Tree<T> = node.getRight();
-
-      if (!rightNode) {
-        node.insertRight(new Node_Tree<T>(value));
-        return rightNode;
-      }
-
-      this.recursiveInsertNode(rightNode, value);
+      return this.recursiveInsertNode(node.getRight(), value, node);
     }
   }
 
