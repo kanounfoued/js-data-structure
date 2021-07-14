@@ -58,7 +58,7 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
     return null;
   }
 
-  findParent(value: T): Node_Tree<T> {
+  findParent(value: T): [Node_Tree<T>, Node_Tree<T>] {
     if (!this.root) return null;
 
     let current: Node_Tree<T> = this.root;
@@ -68,7 +68,7 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
       const nodeValue: T = current.getValue();
 
       if (nodeValue === value) {
-        return parent;
+        return [parent, current];
       } else if (nodeValue > value) {
         parent = current;
         current = current.getLeft();
