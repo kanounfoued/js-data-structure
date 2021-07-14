@@ -1,5 +1,6 @@
 import BSTreeBuilder from "./BSTreeBuilder";
 import Node_Tree from "../utils/node_root";
+import { swapParentChild } from "./utils";
 
 class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
   constructor() {
@@ -42,6 +43,37 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
   }
 
   removeNode(value: T): boolean {
+    if (!this.root) return false;
+
+    let current: Node_Tree<T> = this.root;
+    let previous = null;
+
+    while (current !== null) {
+      if (current.getValue() === value) {
+        if (current.getLeft()) {
+          previous = current;
+          swapParentChild(current, current.getLeft());
+          current = current.getLeft();
+        } else if (current.getRight()) {
+          previous = current;
+          swapParentChild(current, current.getRight());
+          current = current.getRight();
+        } else {
+          if (previous.getLeft() === current) {
+            previous.insertLeft(null);
+          } else {
+            previous.insertRight(null);
+          }
+
+          return !!previous;
+        }
+      } else if (current.getValue() > value) {
+        current = current.getLeft();
+      } else {
+        current = current.getRight();
+      }
+    }
+
     return false;
   }
 }
