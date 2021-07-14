@@ -14,6 +14,8 @@ abstract class BSTreeBuilder<T> {
   abstract findNode(value: T): Node_Tree<T>;
 
   abstract removeNode(value: T): boolean;
+
+  abstract findParent(value: T): Node_Tree<T>;
 }
 
 export default BSTreeBuilder;

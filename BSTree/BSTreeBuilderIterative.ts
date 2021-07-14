@@ -58,6 +58,29 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
     return null;
   }
 
+  findParent(value: T): Node_Tree<T> {
+    if (!this.root) return null;
+
+    let current: Node_Tree<T> = this.root;
+    let parent: Node_Tree<T> = null;
+
+    while (current !== null) {
+      const nodeValue: T = current.getValue();
+
+      if (nodeValue === value) {
+        return parent;
+      } else if (nodeValue > value) {
+        parent = current;
+        current = current.getLeft();
+      } else {
+        parent = current;
+        current = current.getRight();
+      }
+    }
+
+    return null;
+  }
+
   removeNode(value: T): boolean {
     if (!this.root) return false;
 
