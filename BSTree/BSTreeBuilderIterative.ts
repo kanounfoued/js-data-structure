@@ -36,6 +36,14 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
       }
     }
   }
+
+  findNode(value: T): Node_Tree<T> {
+    return null;
+  }
+
+  removeNode(value: T): boolean {
+    return false;
+  }
 }
 
 export default BSTreeBuilderIterative;

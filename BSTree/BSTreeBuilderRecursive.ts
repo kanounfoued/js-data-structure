@@ -1,5 +1,6 @@
 import BSTreeBuilder from "./BSTreeBuilder";
 import Node_Tree from "../utils/node_root";
+import { swapParentChild } from "./utils";
 
 class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
   constructor() {
@@ -15,14 +16,15 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
       this.root = new Node_Tree<T>(value);
       return this.root;
     } else {
-      // call recursive function.
-      return this.recursiveBuiltTree(this.root, value);
+      return this.recursiveInsertNode(this.root, value);
     }
   }
 
   // recursive build of the tree
-  private recursiveBuiltTree(node: Node_Tree<T>, value: T): Node_Tree<T> {
-    if (node.getValue() >= value) {
+  private recursiveInsertNode(node: Node_Tree<T>, value: T): Node_Tree<T> {
+    if (node.getValue() === value) return null;
+
+    if (node.getValue() > value) {
       const leftNode: Node_Tree<T> = node.getLeft();
 
       if (!leftNode) {
@@ -30,7 +32,7 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
         return leftNode;
       }
 
-      this.recursiveBuiltTree(leftNode, value);
+      this.recursiveInsertNode(leftNode, value);
     } else {
       const rightNode: Node_Tree<T> = node.getRight();
 
@@ -39,8 +41,60 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
         return rightNode;
       }
 
-      this.recursiveBuiltTree(rightNode, value);
+      this.recursiveInsertNode(rightNode, value);
     }
+  }
+
+  findNode(value: T): Node_Tree<T> {
+    return null;
+  }
+
+  private remove(node: Node_Tree<T>, value: T, prev: Node_Tree<T>): boolean {
+    if (!node.getLeft() && !node.getRight()) {
+      if (prev.getLeft() === node) prev.insertLeft(null);
+      else prev.insertRight(null);
+
+      return true;
+    }
+
+    if (node.getLeft()) {
+      swapParentChild(node, node.getLeft());
+      return this.remove(node.getLeft(), value, node);
+    } else if (node.getRight()) {
+      swapParentChild(node, node.getRight());
+      return this.remove(node.getRight(), value, node);
+    }
+
+    return false;
+  }
+
+  private recursiveRemove(
+    node: Node_Tree<T>,
+    value: T,
+    prev: Node_Tree<T>
+  ): boolean {
+    if (node.getValue() === value) {
+      return this.remove(node, value, prev);
+    }
+
+    if (node.getValue() > value) {
+      const leftNode: Node_Tree<T> = node.getLeft();
+
+      if (!leftNode) return false;
+
+      return this.recursiveRemove(leftNode, value, node);
+    } else {
+      const rightNode: Node_Tree<T> = node.getRight();
+
+      if (!rightNode) return false;
+
+      return this.recursiveRemove(rightNode, value, node);
+    }
+  }
+
+  removeNode(value: T): boolean {
+    if (!this.root) return false;
+    return !!this.recursiveRemove(this.root, value, null);
   }
 }
 
