@@ -45,8 +45,22 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     }
   }
 
+  private recursiveFindNode(node: Node_Tree<T>, value: T): Node_Tree<T> {
+    if (node === null) return node;
+
+    const nodeValue: T = node.getValue();
+
+    if (nodeValue === value) {
+      return node;
+    } else if (nodeValue > value) {
+      return this.recursiveFindNode(node.getLeft(), value);
+    } else {
+      return this.recursiveFindNode(node.getRight(), value);
+    }
+  }
+
   findNode(value: T): Node_Tree<T> {
-    return null;
+    return this.recursiveFindNode(this.root, value);
   }
 
   private remove(node: Node_Tree<T>, value: T, prev: Node_Tree<T>): boolean {
