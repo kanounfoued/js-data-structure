@@ -111,8 +111,28 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
     return !!this.recursiveRemove(this.root, value, null);
   }
 
+  recursiveFindParent(
+    node: Node_Tree<T>,
+    value: T,
+    parent: Node_Tree<T>
+  ): Node_Tree<T> {
+    if (node === null) return null;
+
+    const nodeValue: T = node.getValue();
+
+    if (nodeValue === value) {
+      return parent;
+    }
+
+    if (nodeValue > value) {
+      return this.recursiveFindParent(node.getLeft(), value, node);
+    } else {
+      return this.recursiveFindParent(node.getRight(), value, node);
+    }
+  }
+
   findParent(value: T): Node_Tree<T> {
-    return null;
+    return this.recursiveFindParent(this.root, value, null);
   }
 }
 
