@@ -39,6 +39,22 @@ class BSTreeBuilderIterative<T> extends BSTreeBuilder<T> {
   }
 
   findNode(value: T): Node_Tree<T> {
+    if (!this.root) return null;
+
+    let current = this.root;
+
+    while (current !== null) {
+      const nodeValue = current.getValue();
+
+      if (nodeValue === value) {
+        return current;
+      } else if (nodeValue > value) {
+        current = current.getLeft();
+      } else {
+        current = current.getRight();
+      }
+    }
+
     return null;
   }
 
