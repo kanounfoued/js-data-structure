@@ -120,10 +120,38 @@ class BSTreeBuilderRecursive<T> extends BSTreeBuilder<T> {
   }
 
   updateNode(oldValue: T, newValue: T): boolean {
-    const node: Node_Tree<T> = this.findNode(oldValue);
+    const doesExist: boolean = !!this.findNode(newValue);
+
+    if (doesExist) {
+      return false;
+    }
+
+    const [parent, node]: [Node_Tree<T>, Node_Tree<T>] = this.findParent(
+      oldValue
+    );
 
     if (node === null) {
       return false;
+    }
+
+    if (
+      parent === null ||
+      (oldValue > parent.getValue() && newValue > parent.getValue()) ||
+      (oldValue < parent.getValue() && newValue < parent.getValue())
+    ) {
+      const leftNode: Node_Tree<T> = node.getLeft();
+      const rightNode: Node_Tree<T> = node.getRight();
+
+      if (leftNode && leftNode.getValue() > newValue) {
+        return false;
+      }
+
+      if (rightNode && rightNode.getValue() < newValue) {
+        return false;
+      }
+
+      node.setValue(newValue);
+      return true;
     }
 
     node.setValue(newValue);
