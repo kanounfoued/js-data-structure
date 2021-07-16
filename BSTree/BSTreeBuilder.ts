@@ -15,6 +15,11 @@ abstract class BSTreeBuilder<T> {
 
   abstract removeNode(value: T): boolean;
 
+  /**
+   * @param value
+   * @returns @[Parent, Node]
+   * returns both the parent and the node that holds the value.
+   */
   abstract findParent(value: T): [Node_Tree<T>, Node_Tree<T>];
 
   abstract updateNode(oldValue: T, newValue: T): boolean;
