@@ -58,6 +58,24 @@ class BSTreeChildrenSizeBuilder<T> {
 
     return null;
   }
+
+  nbrnNodes(value: T, cb: Function): number {
+    if (!this.root) {
+      return 0;
+    }
+
+    let total: number = 0;
+    let current: Node_Tree<NODE_DATA<T>> = this.root;
+
+    while (current !== null) {
+      const [next, nbrNodes] = cb(value, current);
+      current = next;
+      total = total + nbrNodes >= 0 ? total + nbrNodes : 0;
+      console.log("total", total);
+    }
+
+    return total;
+  }
 }
 
 export default BSTreeChildrenSizeBuilder;
