@@ -4,6 +4,7 @@ import BSTreeBuilderIterative from "./BSTreeBuilderIterative";
 import BSTreeChildrenSizeBuilder from "./Examples/BSTreeChildrenSize";
 import Node_Tree from "../utils/node_root";
 import NODE_DATA from "./types/NODE_DATA";
+import { findNodesGreaterOrEqualValue } from "./Examples/BSTreeCallback";
 
 // const r_tree: BSTreeBuilder<number> = new BSTreeBuilderRecursive<number>();
 // r_tree.insertNode(30);
@@ -50,38 +51,6 @@ children_tree.insertNode(15);
 children_tree.insertNode(35);
 children_tree.insertNode(31);
 
-console.log(
-  children_tree.nbrnNodes(
-    21,
-    (
-      value: number,
-      node: Node_Tree<NODE_DATA<number>>
-    ): [Node_Tree<NODE_DATA<number>>, number] => {
-      const currentValue: NODE_DATA<number> = node.getValue();
-
-      if (node === null) {
-        return [null, 0];
-      }
-
-      const rightNode: Node_Tree<NODE_DATA<number>> = node.getRight();
-
-      if (currentValue.value === value) {
-        const children: number = rightNode
-          ? currentValue.childrenSize - rightNode.getValue().childrenSize
-          : currentValue.childrenSize;
-
-        return [null, children];
-      } else if (currentValue.value < value) {
-        const children: number = rightNode
-          ? currentValue.childrenSize - rightNode.getValue().childrenSize
-          : currentValue.childrenSize;
-
-        return [rightNode, children];
-      } else {
-        return [node.getLeft(), -currentValue.childrenSize];
-      }
-    }
-  )
-);
+console.log(children_tree.nbrnNodes(21, findNodesGreaterOrEqualValue));
 
 // console.log(children_tree.getRoot());

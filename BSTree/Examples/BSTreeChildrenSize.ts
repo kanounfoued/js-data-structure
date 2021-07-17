@@ -71,7 +71,6 @@ class BSTreeChildrenSizeBuilder<T> {
       const [next, nbrNodes] = cb(value, current);
       current = next;
       total = total + nbrNodes >= 0 ? total + nbrNodes : 0;
-      console.log("total", total);
     }
 
     return total;
