@@ -1,5 +1,6 @@
 import Node_Tree from "../../utils/node_root";
 import NODE_DATA from "../types/NODE_DATA";
+import { swapParentChildChildrenSize } from "../utils";
 
 // this class is building a tree with not only one single value, instead another value was added into it, which is the number of children (nodes) belongs the the current node which is their (incestor).
 
@@ -59,6 +60,44 @@ class BSTreeChildrenSizeBuilder<T> {
     return null;
   }
 
+  removeNode(value: T): boolean {
+    if (!this.root) {
+      return false;
+    }
+
+    let current: Node_Tree<NODE_DATA<T>> = this.root;
+    let previous: Node_Tree<NODE_DATA<T>> = null;
+
+    while (current !== null) {
+      const currentValue: NODE_DATA<T> = current.getValue();
+
+      if (currentValue.value === value) {
+        if (current.getLeft()) {
+          previous = current;
+          swapParentChildChildrenSize(current, current.getLeft());
+          current = current.getLeft();
+        } else if (current.getRight()) {
+          previous = current;
+          swapParentChildChildrenSize(current, current.getRight());
+          current = current.getRight();
+        } else {
+          if (previous.getLeft() === current) {
+            previous.insertLeft(null);
+          } else {
+            previous.insertRight(null);
+          }
+          return !!previous;
+        }
+      } else if (currentValue.value > value) {
+        current = current.getLeft();
+      } else {
+        current = current.getRight();
+      }
+    }
+
+    return false;
+  }
+
   nbrnNodes(value: T, cb: Function): number {
     if (!this.root) {
       return 0;
@@ -71,7 +110,6 @@ class BSTreeChildrenSizeBuilder<T> {
       const [next, nbrNodes] = cb(value, current);
       current = next;
       total = total + nbrNodes >= 0 ? total + nbrNodes : 0;
-      console.log("total", total);
     }
 
     return total;
