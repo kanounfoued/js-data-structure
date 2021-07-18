@@ -51,6 +51,6 @@ children_tree.insertNode(15);
 children_tree.insertNode(35);
 children_tree.insertNode(31);
 
-console.log(children_tree.nbrnNodes(21, findNodesGreaterOrEqualValue));
-
-// console.log(children_tree.getRoot());
+// console.log(children_tree.nbrnNodes(21, findNodesGreaterOrEqualValue));
+console.log(children_tree.removeNode(40));
+console.log(children_tree.getRoot());
