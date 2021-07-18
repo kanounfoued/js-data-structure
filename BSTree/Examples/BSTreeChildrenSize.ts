@@ -98,6 +98,28 @@ class BSTreeChildrenSizeBuilder<T> {
     return false;
   }
 
+  findNode(value: T): Node_Tree<NODE_DATA<T>> {
+    if (!this.root) {
+      return null;
+    }
+
+    let current: Node_Tree<NODE_DATA<T>> = this.root;
+
+    while (current !== null) {
+      const currentValue: NODE_DATA<T> = current.getValue();
+
+      if (currentValue.value === value) {
+        return current;
+      } else if (currentValue.value > value) {
+        current = current.getLeft();
+      } else {
+        current = current.getRight();
+      }
+    }
+
+    return null;
+  }
+
   nbrnNodes(value: T, cb: Function): number {
     if (!this.root) {
       return 0;
