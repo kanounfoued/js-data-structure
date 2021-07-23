@@ -61,7 +61,8 @@ class BSTreeChildrenSizeBuilder<T> {
   }
 
   removeNode(value: T): boolean {
-    if (!this.root) {
+    const node: Node_Tree<NODE_DATA<T>> = this.findNode(value);
+    if (node === null || !this.root) {
       return false;
     }
 
@@ -70,6 +71,11 @@ class BSTreeChildrenSizeBuilder<T> {
 
     while (current !== null) {
       const currentValue: NODE_DATA<T> = current.getValue();
+
+      current.setValue({
+        ...currentValue,
+        childrenSize: currentValue.childrenSize - 1,
+      });
 
       if (currentValue.value === value) {
         if (current.getLeft()) {
@@ -89,13 +95,37 @@ class BSTreeChildrenSizeBuilder<T> {
           return !!previous;
         }
       } else if (currentValue.value > value) {
+        previous = current;
+        current = current.getLeft();
+      } else {
+        previous = current;
+        current = current.getRight();
+      }
+    }
+
+    return false;
+  }
+
+  findNode(value: T): Node_Tree<NODE_DATA<T>> {
+    if (!this.root) {
+      return null;
+    }
+
+    let current: Node_Tree<NODE_DATA<T>> = this.root;
+
+    while (current !== null) {
+      const currentValue: NODE_DATA<T> = current.getValue();
+
+      if (currentValue.value === value) {
+        return current;
+      } else if (currentValue.value > value) {
         current = current.getLeft();
       } else {
         current = current.getRight();
       }
     }
 
-    return false;
+    return null;
   }
 
   nbrnNodes(value: T, cb: Function): number {

@@ -11,11 +11,16 @@ export function swapParentChildChildrenSize<T>(
   parent: Node_Tree<NODE_DATA<T>>,
   child: Node_Tree<NODE_DATA<T>>
 ) {
-  const inter = parent.getValue();
+  const interParent = parent.getValue();
+  const interChild = child.getValue();
+
   parent.setValue({
     value: child.getValue().value,
-    childrenSize: inter.childrenSize - 1,
+    childrenSize: interParent.childrenSize,
   });
 
-  child.setValue(inter);
+  child.setValue({
+    ...interParent,
+    childrenSize: interChild.childrenSize,
+  });
 }
