@@ -11,15 +11,50 @@ class AVLTree<T> {
     return this.root;
   }
 
-  insertNode(): Node_Tree<T> {
-    return null;
+  insertNode(value: T): Node_Tree<T> {
+    if (!this.root) {
+      this.root = new Node_Tree<T>(value);
+      return this.root;
+    } else {
+      let current: Node_Tree<T> = this.root;
+
+      while (current !== null) {
+        if (current.getValue() >= value) {
+          if (!current.getLeft()) {
+            current.insertLeft(new Node_Tree<T>(value));
+            return current;
+          }
+
+          current = current.getLeft();
+        } else if (current.getValue() < value) {
+          if (!current.getRight()) {
+            current.insertRight(new Node_Tree<T>(value));
+            return current;
+          }
+
+          current = current.getRight();
+        }
+      }
+    }
   }
 
-  findNode(): Node_Tree<T> {
-    return null;
-  }
+  findNode(value: T): Node_Tree<T> {
+    if (!this.root) return null;
 
-  removeNode(): Node_Tree<T> {
+    let current = this.root;
+
+    while (current !== null) {
+      const nodeValue = current.getValue();
+
+      if (nodeValue === value) {
+        return current;
+      } else if (nodeValue > value) {
+        current = current.getLeft();
+      } else {
+        current = current.getRight();
+      }
+    }
+
     return null;
   }
 }
