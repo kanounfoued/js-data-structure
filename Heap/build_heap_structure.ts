@@ -3,11 +3,7 @@ import Node_Tree from "../utils/node_root";
 class Build_Heap_Structure<S> {
   private root: Node_Tree<S>;
 
-  constructor() {
-    this.root = null;
-  }
-
-  getRoot(): Node_Tree<S> {
+  getRoot() {
     return this.root;
   }
 
@@ -50,7 +46,7 @@ class Build_Heap_Structure<S> {
     let i: number = 0;
 
     while (i < arr_heap.length / 2) {
-      let node: Node_Tree<S> = queue.shift();
+      let node: Node_Tree<S> = queue.shift() as Node_Tree<S>;
 
       if (arr_heap[2 * i + 1] !== undefined) {
         let leftNode: Node_Tree<S> = new Node_Tree<S>(arr_heap[2 * i + 1]);
