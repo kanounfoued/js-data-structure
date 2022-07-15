@@ -62,15 +62,16 @@ class BSTreeChildrenSizeBuilder<T> {
 
   removeNode(value: T): boolean {
     const node: Node_Tree<NODE_DATA<T>> = this.findNode(value);
-    if (node === null || !this.root) {
+
+    if (!node || !this.root) {
       return false;
     }
 
-    let current: Node_Tree<NODE_DATA<T>> = this.root;
-    let previous: Node_Tree<NODE_DATA<T>> = null;
+    let current = this.root;
+    let previous = null;
 
     while (current !== null) {
-      const currentValue: NODE_DATA<T> = current.getValue();
+      const currentValue = current.getValue();
 
       current.setValue({
         ...currentValue,
@@ -78,22 +79,18 @@ class BSTreeChildrenSizeBuilder<T> {
       });
 
       if (currentValue.value === value) {
-        if (current.getLeft()) {
-          previous = current;
-          swapParentChildChildrenSize(current, current.getLeft());
-          current = current.getLeft();
-        } else if (current.getRight()) {
-          previous = current;
-          swapParentChildChildrenSize(current, current.getRight());
-          current = current.getRight();
-        } else {
-          if (previous.getLeft() === current) {
-            previous.insertLeft(null);
-          } else {
-            previous.insertRight(null);
-          }
-          return !!previous;
+        const leftOrRightNode = current.getLeft() || current.getRight() || null;
+
+        if (!leftOrRightNode) {
+          if (previous.getLeft() === current) previous.insertLeft(null);
+          else previous.insertRight(null);
+
+          return true;
         }
+
+        previous = current;
+        swapParentChildChildrenSize(current, leftOrRightNode);
+        current = leftOrRightNode;
       } else if (currentValue.value > value) {
         previous = current;
         current = current.getLeft();
