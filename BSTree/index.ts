@@ -1,10 +1,10 @@
-import BSTreeBuilder from "./BSTreeBuilder";
-import BSTreeBuilderRecursive from "./BSTreeBuilderRecursive";
-import BSTreeBuilderIterative from "./BSTreeBuilderIterative";
+// import BSTreeBuilder from "./BSTreeBuilder";
+// import BSTreeBuilderRecursive from "./BSTreeBuilderRecursive";
+// import BSTreeBuilderIterative from "./BSTreeBuilderIterative";
 import BSTreeChildrenSizeBuilder from "./Examples/BSTreeChildrenSize";
-import Node_Tree from "../utils/node_root";
-import NODE_DATA from "./types/NODE_DATA";
-import { findNodesGreaterOrEqualValue } from "./Examples/BSTreeCallback";
+// import Node_Tree from "../utils/node_root";
+// import NODE_DATA from "./types/NODE_DATA";
+// import { findNodesGreaterOrEqualValue } from "./Examples/BSTreeCallback";
 
 // const r_tree: BSTreeBuilder<number> = new BSTreeBuilderRecursive<number>();
 // r_tree.insertNode(30);
@@ -39,9 +39,8 @@ import { findNodesGreaterOrEqualValue } from "./Examples/BSTreeCallback";
 // console.log(i_tree.findParent(31));
 // console.log(i_tree.getRoot());
 
-const children_tree: BSTreeChildrenSizeBuilder<number> = new BSTreeChildrenSizeBuilder<
-  number
->();
+const children_tree: BSTreeChildrenSizeBuilder<number> =
+  new BSTreeChildrenSizeBuilder<number>();
 
 children_tree.insertNode(30);
 children_tree.insertNode(40);
@@ -52,5 +51,7 @@ children_tree.insertNode(35);
 children_tree.insertNode(31);
 
 // console.log(children_tree.nbrnNodes(21, findNodesGreaterOrEqualValue));
+// console.log(children_tree.getRoot());
 console.log(children_tree.removeNode(40));
+console.log(children_tree.removeNode(30));
 console.log(children_tree.getRoot());
