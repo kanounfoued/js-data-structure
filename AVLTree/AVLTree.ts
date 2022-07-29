@@ -118,7 +118,6 @@ class AVLTree<T> {
 
     calculateHeightDiff(node);
     calculateHeightDiff(child);
-    calculateHeightDiff(nodeParent);
   }
 
   rotateRight(node: Node_Tree_With_Parent<T>) {
@@ -146,7 +145,6 @@ class AVLTree<T> {
 
     calculateHeightDiff(node);
     calculateHeightDiff(child);
-    calculateHeightDiff(nodeParent);
   }
 
   /**
