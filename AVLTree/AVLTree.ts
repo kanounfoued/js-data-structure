@@ -1,3 +1,4 @@
+import { calculateHeight } from "../utils/avlFunction";
 import Node_Tree_With_Parent from "../utils/node_root_with_parent";
 
 class AVLTree<T> {
@@ -47,7 +48,7 @@ class AVLTree<T> {
 
           this.fixAvlTree(current);
 
-          // return the ew inserted value
+          // return the new inserted value
           return current.getRight();
         }
 
@@ -59,93 +60,86 @@ class AVLTree<T> {
   fixAvlTree(node: Node_Tree_With_Parent<T> = null) {
     if (!node) return true;
 
-    const rHeight = node.calculateHeight(node.getRight());
-    const lHeight = node.calculateHeight(node.getLeft());
+    // Over / Under these values [1, 0, -1], it should be fixed.
+    const heightDiff = calculateHeight<T>(node);
 
-    // 1, 0, -1
-    // Over / Under these values it should be fixed.
-    const heightDiff = lHeight - rHeight;
-
-    if ([1, 0, -1].some((value) => value === heightDiff)) {
+    // if this is true => everything is good, go to the parent
+    if ([1, 0, -1].some((height) => height === heightDiff)) {
       return this.fixAvlTree(node.getParent());
     }
 
+    //  it means the current node is right heavy
     if (heightDiff < -1) {
-      const child = node.getRight();
-      const rChildHeight = child.calculateHeight(child.getRight());
-      const lChildHeight = child.calculateHeight(child.getLeft());
-
-      const childHeightDiff = lChildHeight - rChildHeight;
+      const childHeightDiff = calculateHeight(node.getRight());
 
       if (childHeightDiff === 1) {
-        this.rotateRight(child);
+        this.rotateRight(node.getRight());
       }
 
       this.rotateLeft(node);
-    } else if (heightDiff > 1) {
-      const child = node.getLeft();
-      const rChildHeight = child.calculateHeight(child.getRight());
-      const lChildHeight = child.calculateHeight(child.getLeft());
 
-      const childHeightDiff = lChildHeight - rChildHeight;
+      // it means the current node is left heavy
+    } else if (heightDiff > 1) {
+      const childHeightDiff = calculateHeight(node.getLeft());
 
       if (childHeightDiff === -1) {
-        this.rotateLeft(child);
+        this.rotateLeft(node.getLeft());
       }
 
       this.rotateRight(node);
     }
 
+    // after fixing the node, go to fix the parent if it breaks the rule of an AVL
     return this.fixAvlTree(node.getParent());
   }
 
   rotateLeft(node: Node_Tree_With_Parent<T>) {
-    const rightChild = node.getRight();
+    const child = node.getRight();
 
-    node.insertRight(rightChild.getLeft());
-
-    rightChild.insertLeft(node);
+    node.insertRight(child.getLeft());
+    child.insertLeft(node);
 
     const nodeParent = node.getParent();
 
-    node.setParent(rightChild);
-    rightChild.setParent(nodeParent);
+    node.setParent(child);
+    child.setParent(nodeParent);
 
     if (!nodeParent) {
-      this.root = rightChild;
+      this.root = child;
     } else {
-      // if the node was right child the rigthChild will be inserted at the right,
+      // if the node was a right child the child var will be inserted at the right,
       if (nodeParent.getRight().getValue() === node.getValue()) {
-        nodeParent.insertRight(rightChild);
-      } else {
-        // left otherwise
-        nodeParent.insertLeft(rightChild);
+        nodeParent.insertRight(child);
+        return;
       }
+
+      // left otherwise
+      nodeParent.insertLeft(child);
     }
   }
 
   rotateRight(node: Node_Tree_With_Parent<T>) {
-    const leftChild = node.getLeft();
+    const child = node.getLeft();
 
-    node.insertLeft(leftChild.getRight());
-
-    leftChild.insertRight(node);
+    node.insertLeft(child.getRight());
+    child.insertRight(node);
 
     const nodeParent = node.getParent();
 
-    leftChild.setParent(nodeParent);
-    node.setParent(leftChild);
+    child.setParent(nodeParent);
+    node.setParent(child);
 
     if (!nodeParent) {
-      this.root = leftChild;
+      this.root = child;
     } else {
       // if the node was right child the rigthChild will be inserted at the right,
       if (nodeParent.getRight().getValue() === node.getValue()) {
-        nodeParent.insertRight(leftChild);
-      } else {
-        // left otherwise
-        nodeParent.insertLeft(leftChild);
+        nodeParent.insertRight(child);
+        return;
       }
+
+      // left otherwise
+      nodeParent.insertLeft(child);
     }
   }
 
