@@ -1,4 +1,4 @@
-import { calculateHeight } from "../utils/avlFunction";
+import { calculateHeightDiff } from "../utils/avlFunction";
 import Node_Tree_With_Parent from "../utils/node_root_with_parent";
 
 class AVLTree<T> {
@@ -61,7 +61,7 @@ class AVLTree<T> {
     if (!node) return true;
 
     // Over / Under these values [1, 0, -1], it should be fixed.
-    const heightDiff = calculateHeight<T>(node);
+    const heightDiff = calculateHeightDiff<T>(node);
 
     // if this is true => everything is good, go to the parent
     if ([1, 0, -1].some((height) => height === heightDiff)) {
@@ -70,7 +70,7 @@ class AVLTree<T> {
 
     //  it means the current node is right heavy
     if (heightDiff < -1) {
-      const childHeightDiff = calculateHeight(node.getRight());
+      const childHeightDiff = calculateHeightDiff<T>(node.getRight());
 
       if (childHeightDiff === 1) {
         this.rotateRight(node.getRight());
@@ -80,7 +80,7 @@ class AVLTree<T> {
 
       // it means the current node is left heavy
     } else if (heightDiff > 1) {
-      const childHeightDiff = calculateHeight(node.getLeft());
+      const childHeightDiff = calculateHeightDiff<T>(node.getLeft());
 
       if (childHeightDiff === -1) {
         this.rotateLeft(node.getLeft());
@@ -110,12 +110,15 @@ class AVLTree<T> {
       // if the node was a right child the child var will be inserted at the right,
       if (nodeParent.getRight().getValue() === node.getValue()) {
         nodeParent.insertRight(child);
-        return;
+      } else {
+        // left otherwise
+        nodeParent.insertLeft(child);
       }
-
-      // left otherwise
-      nodeParent.insertLeft(child);
     }
+
+    calculateHeightDiff(node);
+    calculateHeightDiff(child);
+    calculateHeightDiff(nodeParent);
   }
 
   rotateRight(node: Node_Tree_With_Parent<T>) {
@@ -135,12 +138,15 @@ class AVLTree<T> {
       // if the node was right child the rigthChild will be inserted at the right,
       if (nodeParent.getRight().getValue() === node.getValue()) {
         nodeParent.insertRight(child);
-        return;
+      } else {
+        // left otherwise
+        nodeParent.insertLeft(child);
       }
-
-      // left otherwise
-      nodeParent.insertLeft(child);
     }
+
+    calculateHeightDiff(node);
+    calculateHeightDiff(child);
+    calculateHeightDiff(nodeParent);
   }
 
   /**
