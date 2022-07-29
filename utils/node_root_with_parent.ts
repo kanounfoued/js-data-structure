@@ -3,6 +3,7 @@ class Node_Tree_With_Parent<T> {
   private right: Node_Tree_With_Parent<T> = null;
   private left: Node_Tree_With_Parent<T> = null;
   private parent: Node_Tree_With_Parent<T> = null;
+  private height: number;
 
   constructor(
     value?: T,
@@ -14,6 +15,7 @@ class Node_Tree_With_Parent<T> {
     this.value = value;
     this.left = left;
     this.right = right;
+    this.height = 0;
   }
 
   setValue(value: T) {
@@ -48,16 +50,20 @@ class Node_Tree_With_Parent<T> {
     return this.right;
   }
 
-  calculateHeight(node: Node_Tree_With_Parent<T> = null) {
-    if (!node) return -1;
+  getHeight() {
+    return this.height;
+  }
 
-    return (
-      1 +
-      Math.max(
-        node.calculateHeight(node.getLeft()),
-        node.calculateHeight(node.getRight())
-      )
-    );
+  increaseHeight() {
+    this.height++;
+  }
+
+  decreaseHeight() {
+    this.height--;
+  }
+
+  setHeight(height: number) {
+    this.height = height;
   }
 }
 

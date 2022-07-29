@@ -41,5 +41,3 @@ children_tree.insertNode(100);
 // children_tree.insertNode(55);
 
 console.log(children_tree.getRoot());
-// console.log(children_tree.getRoot()?.calculateHeight(children_tree.getRoot()));
-// console.log(children_tree.getRoot().getLeft());
