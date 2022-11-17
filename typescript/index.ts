@@ -39,3 +39,39 @@ function stringifyObjectKeyValues<T extends Record<string, any>>(obj: T) {
     {} as { [K in keyof T]: string }
   );
 }
+
+type USER = {
+  email: string;
+  password: string;
+};
+
+type ALLOWER_PROPS<K> = {
+  readonly [T in keyof K]: boolean;
+};
+
+const Modal: ALLOWER_PROPS<USER> = {
+  email: true,
+  password: false,
+};
+
+function isAllowed<T>(props: ALLOWER_PROPS<T>) {
+  console.log(props);
+}
+
+isAllowed<USER>({
+  email: false,
+  password: false,
+});
+
+/**
+ *
+ * check if the T has a function type
+ *
+ */
+type GetReturnType<T> = T extends (...args: any[]) => infer U ? U : never;
+
+function someFunction() {
+  return true;
+}
+
+type ReturnTypeOfSomeFunction = GetReturnType<typeof someFunction>;
