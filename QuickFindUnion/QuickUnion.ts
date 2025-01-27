@@ -2,7 +2,6 @@ class QuickUnion {
   components: Array<number>;
 
   constructor(n: number) {
-    // this.components = [1, 1, 1, 8, 3, 0, 5, 1, 8, 8];
     for (let i = 0; i < n; i++) {
       this.components[i] = i;
     }
@@ -17,12 +16,20 @@ class QuickUnion {
     return this.find(this.components[p], this.components[q]);
   }
 
-  union(p: number, q: number) {}
+  union(p: number, q: number) {
+    let inter_p = p;
+    while (this.components[inter_p] !== inter_p) {
+      inter_p = this.components[inter_p];
+    }
+
+    let inter_q = q;
+    while (this.components[inter_q] !== inter_q) {
+      inter_q = this.components[inter_q];
+    }
+
+    this.components[inter_p] = inter_q;
+  }
 }
 
-// 0 1 2 3 4 5 6 7 8 9
-const arr = [1, 8, 1, 8, 3, 0, 5, 1, 8, 8];
-
 const fu = new QuickUnion(10);
-
-// console.log(fu.find(6, 9));
+fu.union(1, 8);
