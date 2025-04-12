@@ -2,6 +2,8 @@ class QuickUnion {
   components: Array<number>;
 
   constructor(n: number) {
+    this.components = [];
+
     for (let i = 0; i < n; i++) {
       this.components[i] = i;
     }
@@ -31,5 +33,16 @@ class QuickUnion {
   }
 }
 
-const fu = new QuickUnion(10);
-fu.union(1, 8);
+const qu = new QuickUnion(10);
+
+qu.union(4, 3);
+qu.union(3, 8);
+qu.union(6, 5);
+qu.union(9, 4);
+qu.union(2, 1);
+qu.union(5, 0);
+qu.union(7, 2);
+qu.union(6, 1);
+qu.union(7, 3);
+
+console.log(qu.components);
