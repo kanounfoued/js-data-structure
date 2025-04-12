@@ -1,35 +1,38 @@
 class QuickUnion {
-  components: Array<number>;
+  nodes: Array<number>;
 
   constructor(n: number) {
-    this.components = [];
+    this.nodes = [];
 
     for (let i = 0; i < n; i++) {
-      this.components[i] = i;
+      this.nodes[i] = i;
     }
   }
 
-  find(p: number, q: number) {
-    if (this.components[p] === p && this.components[q] === q) {
+  root(p: number) {
+    let root = p;
+
+    while (root !== this.nodes[root]) {
+      root = this.nodes[root];
+    }
+
+    return root;
+  }
+
+  connected(p: number, q: number) {
+    if (this.nodes[p] === p && this.nodes[q] === q) {
       if (p === q) return true;
       else return false;
     }
 
-    return this.find(this.components[p], this.components[q]);
+    return this.connected(this.nodes[p], this.nodes[q]);
   }
 
   union(p: number, q: number) {
-    let inter_p = p;
-    while (this.components[inter_p] !== inter_p) {
-      inter_p = this.components[inter_p];
-    }
+    let root_p = this.root(p);
+    let root_q = this.root(q);
 
-    let inter_q = q;
-    while (this.components[inter_q] !== inter_q) {
-      inter_q = this.components[inter_q];
-    }
-
-    this.components[inter_p] = inter_q;
+    this.nodes[root_p] = root_q;
   }
 }
 
@@ -45,4 +48,4 @@ qu.union(7, 2);
 qu.union(6, 1);
 qu.union(7, 3);
 
-console.log(qu.components);
+console.log(qu.nodes);
