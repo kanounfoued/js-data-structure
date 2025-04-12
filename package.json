@@ -5,7 +5,7 @@
   "author": "@kanounfoued",
   "license": "MIT",
   "scripts": {
-    "ts-node": "ts-node ./QuickFindUnion/QuickUnion.ts"
+    "ts-node": "ts-node ./QuickFindUnion/WeightedQuickUnionWithPathCompression.ts"
   },
   "dependencies": {
     "ts-node": "^10.9.1",
