@@ -1,4 +1,4 @@
-class WeightedQuickUnionWithPathCompression {
+export class WeightedQuickUnionWithPathCompression {
   nodes: Array<number>;
   weights: Array<number>;
 
