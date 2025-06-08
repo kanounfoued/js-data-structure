@@ -22,6 +22,8 @@ export class GridCellNeighbor {
       return this.rightCenterCell(row, col);
     }
 
+    console.log("render", row, col, this.size);
+
     return this.centerCell(row, col);
   }
 
@@ -78,7 +80,7 @@ export class GridCellNeighbor {
     return [
       { row, col: col - 1 },
       { row, col: col + 1 },
-      { row: row + 1, col: col },
+      { row: row + 1, col },
     ];
   }
 
@@ -100,7 +102,7 @@ export class GridCellNeighbor {
     return [
       { row, col: col - 1 },
       { row, col: col + 1 },
-      { row: row - 1, col: col },
+      { row: row - 1, col },
     ];
   }
 
@@ -113,7 +115,7 @@ export class GridCellNeighbor {
 
   public bottomRightCornerCell(row: number, col: number) {
     return [
-      { row: row - 1, col: col },
+      { row: row - 1, col },
       { row, col: col - 1 },
     ];
   }
