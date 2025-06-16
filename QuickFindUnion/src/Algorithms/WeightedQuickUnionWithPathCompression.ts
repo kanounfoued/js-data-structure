@@ -68,19 +68,19 @@ export class WeightedQuickUnionWithPathCompression {
   }
 }
 
-const wquwpc = new WeightedQuickUnionWithPathCompression(10);
+// const wquwpc = new WeightedQuickUnionWithPathCompression(10);
 
-wquwpc.union(4, 3);
-wquwpc.union(3, 8);
-wquwpc.union(6, 5);
-wquwpc.union(9, 4);
-wquwpc.union(2, 1);
-wquwpc.union(5, 0);
-wquwpc.union(7, 2);
-wquwpc.union(6, 1);
-wquwpc.union(7, 3);
+// wquwpc.union(4, 3);
+// wquwpc.union(3, 8);
+// wquwpc.union(6, 5);
+// wquwpc.union(9, 4);
+// wquwpc.union(2, 1);
+// wquwpc.union(5, 0);
+// wquwpc.union(7, 2);
+// wquwpc.union(6, 1);
+// wquwpc.union(7, 3);
 
-wquwpc.connected(6, 8);
+// wquwpc.connected(6, 8);
 
-console.log(wquwpc.nodes);
-console.log(wquwpc.weights);
+// console.log(wquwpc.nodes);
+// console.log(wquwpc.weights);

@@ -22,8 +22,6 @@ export class GridCellNeighbor {
       return this.rightCenterCell(row, col);
     }
 
-    console.log("render", row, col, this.size);
-
     return this.centerCell(row, col);
   }
 

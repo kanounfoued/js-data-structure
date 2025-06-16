@@ -1,18 +1,11 @@
-import { WeightedQuickUnionWithPathCompression } from "../WeightedQuickUnionWithPathCompression";
-import { GridCellNeighbor } from "./GridCellNeighbor";
+import { WeightedQuickUnionWithPathCompression } from "../Algorithms/WeightedQuickUnionWithPathCompression";
+import { GridCellNeighbor } from "./grid-cell-neighbor";
 
-class PercolateSystem {
+export class PercolateSystem {
   private grid: number[][];
   private numOfOpenSites: number;
   private weightedQuickUnion: WeightedQuickUnionWithPathCompression;
   private gridCell: GridCellNeighbor;
-
-  /**
-   * all the grid is initialized with 0
-   * 0 means blocked
-   * 1 means open
-   * 2 means full
-   */
 
   /**
    *
@@ -26,9 +19,9 @@ class PercolateSystem {
     this.gridCell = new GridCellNeighbor(n);
     this.numOfOpenSites = 0;
 
-    this.grid = Array(n)
+    this.grid = Array<number>(n)
       .fill(0)
-      .map(() => Array(n).fill(0));
+      .map(() => Array<number>(n).fill(0));
   }
 
   // opens the site (row, col) if it is not open already
@@ -107,7 +100,7 @@ class PercolateSystem {
   }
 }
 
-function availableCells(n: number) {
+export function availableCells(n: number) {
   const cellRegister: Array<Array<number>> = new Array(n)
     .fill(0)
     .map(() => new Array(n).fill(0));
@@ -120,37 +113,3 @@ function availableCells(n: number) {
 
   return cellRegister;
 }
-
-function main() {
-  const n = 4;
-  const percolateSystem = new PercolateSystem(n);
-  const numberOfShoot = n * n;
-
-  let cellRegister = availableCells(n);
-
-  for (let i = 0; i < numberOfShoot; i++) {
-    // let row = Math.floor(Math.random() * (cellRegister.length - 1));
-    let row = undefined;
-
-    do {
-      row = Math.floor(Math.random() * cellRegister.length);
-    } while (cellRegister[row].length === 0);
-
-    const random = Math.floor(Math.random() * (cellRegister[row].length - 1));
-    const randomNumber = cellRegister[row][random];
-
-    const col = Math.floor(randomNumber - row * n);
-
-    cellRegister[row].splice(random, 1);
-
-    percolateSystem.open(row, col);
-    const isPercolating = percolateSystem.percolates();
-
-    if (isPercolating) {
-      console.log("isPercolating", isPercolating);
-      break;
-    }
-  }
-}
-
-main();
