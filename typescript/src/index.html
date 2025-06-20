@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./ui/index.css" />
+    <title>Percolation System</title>
+  </head>
+  <body>
+    <div id="root"></div>
+
+    <script type="importmap">
+      {
+        "imports": {
+          "./dist/Percolation/grid-cell-neighbor": "./dist/Percolation/grid-cell-neighbor.js",
+          "./dist/Percolation/percolation": "./dist/Percolation/percolation.js",
+          "./dist/ui/cell-ui": "./dist/ui/cell-ui.js",
+          "./dist/ui/grid-ui": "./dist/ui/grid-ui.js",
+          "./dist/Algorithms/WeightedQuickUnionWithPathCompression": "./dist/Algorithms/WeightedQuickUnionWithPathCompression.js"
+        }
+      }
+    </script>
+    <script src="./dist/main.js" type="module"></script>
+  </body>
+</html>

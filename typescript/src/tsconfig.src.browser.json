@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES6", // Modern JS, works in Node.js 14+ and browsers
+    "module": "es6", // Use ES modules for flexibility
+    // "moduleResolution": "bundler", // Support Node.js module resolution
+    "lib": ["ES6", "DOM"],
+    "outDir": "./dist",
+    "rootDir": "./",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "include": ["./**/*.ts"],
+  "exclude": ["node_modules"]
+}
