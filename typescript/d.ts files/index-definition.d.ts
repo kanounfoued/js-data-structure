@@ -8,3 +8,8 @@
 // types.d.ts
 
 export function add(a: number, b: number): number;
+
+// ----------------- JS files ------------------
+// these files can also be used with js files to check the type of variables or function you are using.
+
+// to let the IDE complains about types error we need to add @ts-check at the top of the file.
