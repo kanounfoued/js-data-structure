@@ -1,40 +1,43 @@
+import { CellUI } from "./cell-ui";
+
 export class GridUI {
-  private grid: Array<Array<number>>;
+  private grid: Array<CellUI> = [];
+  private gridNode: HTMLDivElement | undefined = undefined;
 
   constructor(size: number) {
-    let row: Array<Number> = new Array(size);
-    row.fill(0);
-
-    this.grid = row.map(() => Array<number>(size));
-
-    for (let i = 0; i < this.grid.length; i++) {
-      this.grid[i] = this.grid[i].fill(0);
+    if (size <= 0) {
+      throw "Size must be greater than 0";
     }
-  }
 
-  draw() {
-    const grid = document.createElement("div");
-    grid.classList.add("grid");
     const root = document.getElementById("root");
 
     if (!root) {
       return;
     }
 
-    for (let row = 0; row < this.grid.length; row++) {
-      const rowDiv = document.createElement("div");
-      rowDiv.classList.add("row");
+    this.grid = new Array(size * size);
+    this.gridNode = document.createElement("div");
+    this.gridNode.classList.add("grid");
+    root.appendChild(this.gridNode);
 
-      for (let col = 0; col < this.grid.length; col++) {
-        const cell = document.createElement("div");
-        cell.setAttribute("id", `${row * this.grid.length + col}`);
-        cell.classList.add("cell");
-        rowDiv.appendChild(cell);
+    for (let row = 0; row < size; row++) {
+      const rowNode = document.createElement("div");
+      rowNode.classList.add("row");
+      this.gridNode.appendChild(rowNode);
+
+      for (let col = 0; col < size; col++) {
+        const cellIndex = row * size + col;
+        this.grid[cellIndex] = new CellUI(cellIndex);
+        rowNode.appendChild(this.grid[cellIndex].cellNode);
       }
+    }
+  }
 
-      grid.appendChild(rowDiv);
+  openSite(siteIndex: number) {
+    if (siteIndex < 0) {
+      throw "siteIndex must be greater than 0";
     }
 
-    root.appendChild(grid);
+    this.grid[siteIndex].openSite();
   }
 }

@@ -1,16 +1,15 @@
-import { availableCells, PercolateSystem } from "./Percolation/percolation";
+import { PercolateSystem } from "./Percolation/percolation";
 import { GridUI } from "./ui/grid-ui";
-import { CellUI } from "./ui/cell-ui";
+import getClosedCells from "./Percolation/track-closed-cells";
 
 async function main() {
   const n = 10;
   const percolateSystem = new PercolateSystem(n);
-  const numberOfShoot = (n * n) / 2 + 5;
+  const numberOfShoot = (n * n) / 2 + 10;
 
-  let unvisitedCells = availableCells(n);
+  let unvisitedCells = getClosedCells(n);
 
   const ui_grid = new GridUI(n);
-  ui_grid.draw();
 
   for (let i = 0; i < numberOfShoot; i++) {
     await new Promise((resolve) => {
@@ -33,8 +32,7 @@ async function main() {
 
         percolateSystem.open(row, col);
 
-        const cellUI = new CellUI(row * n + col);
-        cellUI.draw();
+        ui_grid.openSite(row * n + col);
 
         clearTimeout(timer);
         resolve(null);
@@ -42,10 +40,10 @@ async function main() {
     });
   }
 
-  const isPercolating = percolateSystem.percolates();
+  const indices = percolateSystem.percolates();
 
-  if (isPercolating) {
-    console.log("Yes, it is percolating");
+  if (indices) {
+    console.log("Yes, it is percolating", indices);
   }
 
   console.log(percolateSystem.numberOfOpenSites());

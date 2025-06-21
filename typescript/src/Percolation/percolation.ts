@@ -15,6 +15,10 @@ export class PercolateSystem {
    *  every time new coordinates get injcted into the system and try to test if it percolates.
    */
   constructor(n: number) {
+    if (n <= 0) {
+      throw "n must be greater than 0";
+    }
+
     this.weightedQuickUnion = new WeightedQuickUnionWithPathCompression(n * n);
     this.gridCell = new GridCellNeighbor(n);
     this.numOfOpenSites = 0;
@@ -83,7 +87,7 @@ export class PercolateSystem {
 
   // does the system percolate?
   // the system percolates if there is a full site starting from the top to the bottom.
-  public percolates(): boolean {
+  public percolates(): [number, number] | null {
     const lastRow = this.grid.length - 1;
 
     for (let index = 0; index < this.grid[lastRow].length; index++) {
@@ -92,24 +96,10 @@ export class PercolateSystem {
       }
 
       if (this.isFull(lastRow, index)) {
-        return true;
+        return [lastRow, index];
       }
     }
 
-    return false;
+    return null;
   }
-}
-
-export function availableCells(n: number) {
-  const cellRegister: Array<Array<number>> = new Array(n)
-    .fill(0)
-    .map(() => new Array(n).fill(0));
-
-  for (let row = 0; row < n; row++) {
-    for (let col = 0; col < n; col++) {
-      cellRegister[row][col] = row * n + col;
-    }
-  }
-
-  return cellRegister;
 }

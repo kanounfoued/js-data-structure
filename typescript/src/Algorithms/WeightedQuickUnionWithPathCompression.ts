@@ -35,6 +35,18 @@ export class WeightedQuickUnionWithPathCompression {
     return root;
   }
 
+  getParent(p: number) {
+    if (!this.isValid(p)) {
+      return -1;
+    }
+
+    if (p === this.nodes[p]) {
+      return -2;
+    }
+
+    return this.nodes[this.nodes[p]];
+  }
+
   union(p: number, q: number) {
     if (!this.isValid(p)) {
       return;
