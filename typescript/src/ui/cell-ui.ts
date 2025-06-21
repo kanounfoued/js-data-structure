@@ -1,15 +1,21 @@
 export class CellUI {
   index: number;
+  cellNode: HTMLDivElement;
 
   constructor(index: number) {
+    if (index < 0) {
+      throw "index must be greater than 0";
+    }
+
     this.index = index;
+    this.cellNode = document.createElement("div");
+    this.cellNode.setAttribute("id", `${index}`);
+    this.cellNode.classList.add("cell");
   }
 
-  draw() {
-    const cell = document.getElementById(`${this.index}`);
+  openSite() {
+    if (!this.cellNode) throw "cellNode not found.";
 
-    if (!cell) throw "Cell does not exist in the DOM";
-
-    cell.classList.add("red-cell");
+    this.cellNode.classList.add("red-cell");
   }
 }
