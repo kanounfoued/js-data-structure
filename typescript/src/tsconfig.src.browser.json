@@ -9,6 +9,8 @@
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true
+    // "declaration": true, // generate .d.ts files
+    // "declarationDir": "./types" // generate .d.ts files in the dist folder
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
