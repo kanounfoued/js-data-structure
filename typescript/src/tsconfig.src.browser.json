@@ -1,16 +1,32 @@
 {
   "compilerOptions": {
-    "target": "ES6", // Modern JS, works in Node.js 14+ and browsers
-    "module": "es6", // Use ES modules for flexibility
+    // Modern JS, works in Node.js 14+ and browsers
+    // the more the target get increased the more you gain more js features and the code will be transpiled to the latest version of js compatible on the newest ones. plus gaining slightly on performance.
+    // the more you used elder versions the more you gain compatibility across browsers, but losing more features.
+    // EX: using ES5, will not be able to use Promises
+    "target": "ES6",
+
+    // module determine the way how to transpile the typescript code to js file.
+    // we can say the most used ones are commonJS for node env and ES6 for browser env.
+    "module": "es6",
     // "moduleResolution": "bundler", // Support Node.js module resolution
+
+    // the lib property is essential for typescript to determine what are the .d.ts files to include while compiling the code.
+    // this will help typescript to recognize all the APIs used inside the code.
+    // EX: in case the code include some DOM APIs and DOM is not included inside the lib property, typescript compilation will fail because of that.
     "lib": ["ES6", "DOM"],
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
-    "skipLibCheck": true
-    // "declaration": true, // generate .d.ts files
+    "skipLibCheck": true,
+    // generate .d.ts files
+    // "declaration": true,
     // "declarationDir": "./types" // generate .d.ts files in the dist folder
+
+    // source map represents the link between the transpiled js file and the original ts files.
+    // it makes the debugging easier by showing the original code instead of the transpiled js code which will be most likely unreadable.
+    "sourceMap": false
   },
   "include": ["./**/*.ts"],
   "exclude": ["node_modules"]
