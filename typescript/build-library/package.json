@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "train myself how to create a new library in different file system",
   "main": "./dist/index.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist",
   "files": [
     "./dist"
   ],
